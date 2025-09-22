@@ -140,8 +140,8 @@ export const validatHtml = async (request, reply, rootDir) => {
 
 // Vercel环境检测中间件
 export const validateVercel = (request, reply, done) => {
-    if (IS_VERCEL) {
-        return reply.status(503).send('API not available on Vercel platform');
-    }
+    //if (IS_VERCEL) {
+        //return reply.status(503).send('API not available on Vercel platform');
+    //}
     done();
 };
