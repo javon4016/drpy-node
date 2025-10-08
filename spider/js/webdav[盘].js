@@ -58,10 +58,25 @@ var rule = {
             url: webdavProxyUrl + input
         }
     },
+    action: async function (action, value) {
+        if (action === 'only_params') {
+            return '这是个传参源哦'
+        }
+        return `未定义动作:${action}`
+    },
     推荐: async function () {
-        let {input, pdfa, pdfh, pd} = this;
+        let {input, pdfa, pdfh, pd, publicUrl} = this;
+        let vod_pic = urljoin(publicUrl, './images/icon_common/网盘.png');
         let d = [];
-        return setResult(d)
+        if (!rule.pans || rule.pans.length < 1) {
+            d.push({
+                vod_id: 'only_params',
+                vod_pic: vod_pic,
+                vod_name: '这是个传参源哦',
+                vod_tag: 'action',
+            })
+        }
+        return d
     },
     一级: async function (tid, pg, filter, extend) {
         let d = [];
