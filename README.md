@@ -1,7 +1,7 @@
 # drpyS(drpy-node)
 
 nodejs作为服务端的drpy实现。全面升级异步写法  
-~~积极开发中，每日一更~~，当前进度 `99.99999%`  
+~~积极开发中，每日一更~~，当前进度 `99.999999%`  
 ~~找工作中，随缘更新~~  
 上班当牛马，下班要带娃，阶段性佛系趁娃睡觉熬夜更新
 
@@ -37,6 +37,7 @@ nodejs作为服务端的drpy实现。全面升级异步写法
 * [DS时钟插件-白色时钟](/apps/clock/white_clock.html)|[日历时钟](/apps/clock/index.html)
 * [DS庆祝页面-完结撒花](/apps/happy/index.html)
 * [DrPlayer](/apps/drplayer)
+* [bookReader](/apps/book-reader)
 * [代码加解密工具](/admin/encoder)
 * [央视点播解析工具](/proxy/央视大全[官]/index.html)
 * [在线猫ds源主页](/cat/index.html)
@@ -53,52 +54,17 @@ nodejs作为服务端的drpy实现。全面升级异步写法
 
 ## 更新记录
 
-### 20251008
+### 20251014
 
-更新至V1.3.8
+更新至V1.3.12
 
-### 20251007
+### 20251013
 
-更新至V1.3.7
+更新至V1.3.11
 
-### 20250927
+### 20251012
 
-更新至V1.3.6
-
-### 20250925
-
-更新至V1.3.5
-
-### 20250919
-
-更新至V1.3.4
-
-### 20250918
-
-更新至V1.3.3
-
-### 20250916
-
-更新至V1.3.2
-
-### 20250914
-
-更新至V1.3.1
-
-框架已完成，预留0.1%进度修bug
-
-### 20250913
-
-更新至V1.2.30
-
-### 20250911
-
-更新至V1.2.29
-完美dr2模板源适配
-
-### 20250910
-
-更新至V1.2.28
+更新至V1.3.10
 
 [点此查看完整更新记录](docs/updateRecord.md)
 
@@ -200,6 +166,7 @@ pm2 restart drpys
 * [ZY写源教学](https://zy.catni.cn/editSource/edit-grammar.html)
 * [源动力-新](https://tvshare.cn/)
 * [源动力-老](https://sourcepower.top/index)
+* [电竞专业反应测试](https://www.arealme.com/brain-memory-game/zh/)
 
 ## AI接入
 
