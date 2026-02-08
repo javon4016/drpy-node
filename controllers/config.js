@@ -190,6 +190,7 @@ async function generateSiteJSON(options, requestHost, sub, pwd) {
                         title: ruleObject.title,
                         author: ruleObject.author,
                         类型: ruleObject.类型 || '影视',
+                        mergeList: ruleObject.二级 === '*' || ruleObject.mergeList,
                         searchable: ruleObject.searchable,
                         filterable: ruleObject.filterable,
                         quickSearch: ruleObject.quickSearch,
@@ -197,6 +198,13 @@ async function generateSiteJSON(options, requestHost, sub, pwd) {
                         logo: ruleObject.logo,
                         lang: 'ds',
                     });
+                    if (ruleMeta.mergeList) {
+                        if (ruleMeta.more && typeof ruleMeta.more === 'object') {
+                            ruleMeta.more.mergeList = 1;
+                        } else {
+                            ruleMeta.more = {mergeList: 1};
+                        }
+                    }
                     // console.log('ds ruleMeta:', ruleMeta);
                     await FileHeaderManager.writeHeader(filePath, ruleMeta);
                 } else {
@@ -293,6 +301,7 @@ async function generateSiteJSON(options, requestHost, sub, pwd) {
                             title: ruleObject.title,
                             author: ruleObject.author,
                             类型: ruleObject.类型 || '影视',
+                            mergeList: ruleObject.二级 === '*' || ruleObject.mergeList,
                             searchable: ruleObject.searchable,
                             filterable: ruleObject.filterable,
                             quickSearch: ruleObject.quickSearch,
@@ -300,6 +309,13 @@ async function generateSiteJSON(options, requestHost, sub, pwd) {
                             logo: ruleObject.logo,
                             lang: 'dr2',
                         });
+                        if (ruleMeta.mergeList) {
+                            if (ruleMeta.more && typeof ruleMeta.more === 'object') {
+                                ruleMeta.more.mergeList = 1;
+                            } else {
+                                ruleMeta.more = {mergeList: 1};
+                            }
+                        }
                         // console.log('dr2 ruleMeta:', ruleMeta);
                         await FileHeaderManager.writeHeader(filePath, ruleMeta);
                     } else {
@@ -419,6 +435,11 @@ async function generateSiteJSON(options, requestHost, sub, pwd) {
                         filterable: 1, // 固定值
                         quickSearch: 1, // 固定值
                     };
+                    if (baseName.includes('[画]')) {
+                        ruleObject.类型 = '漫画'
+                    } else if (baseName.includes('[书]')) {
+                        ruleObject.类型 = '小说'
+                    }
                     let ruleMeta = {...ruleObject};
                     const filePath = path.join(pyDir, file);
                     const header = await FileHeaderManager.readHeader(filePath);
@@ -496,9 +517,9 @@ async function generateSiteJSON(options, requestHost, sub, pwd) {
     // 根据用户是否启用php源去生成对应配置
     const enable_php = ENV.get('enable_php', '1');
     console.log('isPhpAvailable:', isPhpAvailable);
-    if (enable_php === '1' && isPhpAvailable) {
+    if ((enable_php === '1' && isPhpAvailable) || enable_php === '2') {
         const php_files = readdirSync(phpDir);
-        const api_type = 4;
+        const api_type = enable_php === '2' ? 3 : 4;
         let php_valid_files = php_files.filter((file) => file.endsWith('.php') && !file.startsWith('_') && !['config.php', 'index.php', 'test_runner.php'].includes(file));
         log(`开始生成php的T${api_type}配置，phpDir:${phpDir},源数量: ${php_valid_files.length}`);
 
@@ -506,16 +527,21 @@ async function generateSiteJSON(options, requestHost, sub, pwd) {
             return {
                 func: async ({file, phpDir, requestHost, pwd, SitesMap}) => {
                     const baseName = path.basename(file, '.php');
-                    let api = `${requestHost}/api/${baseName}?do=php`;
+                    let api = enable_php === '2' ? `${requestHost}/php/${file}` : `${requestHost}/api/${baseName}?do=php`;
                     let ext = '';
                     if (pwd) {
-                        api += `&pwd=${pwd}`;
+                        api += enable_php === '2' ? `?pwd=${pwd}` : `&pwd=${pwd}`;
                     }
                     let ruleObject = {
                         searchable: 1,
                         filterable: 1,
                         quickSearch: 1,
                     };
+                    if (baseName.includes('[画]')) {
+                        ruleObject.类型 = '漫画'
+                    } else if (baseName.includes('[书]')) {
+                        ruleObject.类型 = '小说'
+                    }
                     let ruleMeta = {...ruleObject};
                     const filePath = path.join(phpDir, file);
 
@@ -579,6 +605,11 @@ async function generateSiteJSON(options, requestHost, sub, pwd) {
                         filterable: 1, // 固定值
                         quickSearch: 1, // 固定值
                     };
+                    if (baseName.includes('[画]')) {
+                        ruleObject.类型 = '漫画'
+                    } else if (baseName.includes('[书]')) {
+                        ruleObject.类型 = '小说'
+                    }
                     let ruleMeta = {...ruleObject};
                     const filePath = path.join(catDir, file);
                     const header = await FileHeaderManager.readHeader(filePath);
